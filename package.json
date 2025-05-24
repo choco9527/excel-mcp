@@ -1,22 +1,33 @@
 {
-    "type": "module",
-    "name": "excel-mcp",
-    "version": "1.0.0",
-    "bin": {
-      "excel-mcp": "./build/index.js"
-    },
-    "scripts": {
-      "build": "tsc && chmod 755 build/index.js"
-    },
-    "files": ["build"],
-    "dependencies": {
-      "@modelcontextprotocol/sdk": "^1.11.4",
-      "xlsx": "^0.18.5",
-      "zod": "^3.22.4"
-    },
-    "devDependencies": {
-      "@types/node": "^20.0.0",
-      "typescript": "^5.0.0"
-    }
+  "type": "module",
+  "name": "excel-mcp",
+  "author": "CHOCO",
+  "version": "1.0.1",
+  "description": "基于 MCP 协议的 Excel/CSV 文件读取服务",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourname/excel-mcp.git"
+  },
+  "homepage": "https://github.com/yourname/excel-mcp",
+  "bugs": {
+    "url": "https://github.com/yourname/excel-mcp/issues"
+  },
+  "keywords": ["excel", "csv", "mcp", "数据处理", "modelcontextprotocol"],
+  "bin": {
+    "excel-mcp": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc && chmod 755 build/index.js"
+  },
+  "files": ["build"],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.4",
+    "xlsx": "^0.18.5",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
   }
-  
+}
