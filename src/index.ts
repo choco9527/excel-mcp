@@ -85,9 +85,8 @@ server.tool(
 
       // 添加提示，引导模型继续交互
       responseChunks.push(
-        "\nℹ️ 你可以继续使用 'process_excel' 工具来提取特定列或过滤数据。例如，指定列索引、过滤值或工作表名称。"
+        "\n✅ 文件读取完成！你可以直接描述你的需求，例如：‘请找出所有24号点了早餐的人’，我将自动为你生成并执行 Node.js 脚本来完成你的需求。无需手动编写代码，只需用自然语言告诉我你想要的数据处理结果。"
       );
-
       return {
         content: [{ type: "text", text: responseChunks.join("\n") }],
       };
@@ -100,110 +99,6 @@ server.tool(
   }
 );
 
-// // 工具：处理已读取的 Excel/CSV 数据
-// server.tool(
-//   "process_excel",
-//   "对已读取的 Excel 或 CSV 数据进行进一步处理（例如提取列、过滤行）",
-//   {
-//     filePath: z.string().describe("之前读取的 .xlsx 或 .csv 文件路径"),
-//     sheetName: z.string().optional().describe("Excel 工作表名称，默认为第一个工作表或 CSV 的默认表"),
-//     action: z.enum(["extract_column", "filter_rows"]).describe("操作类型：提取列或过滤行"),
-//     columnIndex: z.number().optional().describe("要提取的列索引（从 0 开始），用于 extract_column"),
-//     filterValue: z.string().optional().describe("过滤行的值，包含该值的行将被返回，用于 filter_rows"),
-//   },
-//   async ({ filePath, sheetName, action, columnIndex, filterValue }) => {
-//     try {
-//       // 检查缓存或重新读取文件
-//       let data = sessionCache.get(filePath);
-//       if (!data) {
-//         if (!fs.existsSync(filePath)) {
-//           return {
-//             content: [{ type: "text", text: `❌ 未找到文件: ${filePath}` }],
-//           };
-//         }
-//         if (filePath.endsWith(".xlsx") || filePath.endsWith(".csv")) {
-//           const workbook = xlsx.readFile(filePath, filePath.endsWith(".csv") ? { raw: true } : undefined);
-//           const sheetNames = workbook.SheetNames;
-//           data = { filePath, data: {} };
-//           for (const name of sheetNames) {
-//             const sheet = workbook.Sheets[name];
-//             data.data[name] = xlsx.utils.sheet_to_json(sheet, { header: 1 });
-//           }
-//           sessionCache.set(filePath, data);
-//         } else {
-//           return {
-//             content: [{ type: "text", text: "❌ 仅支持 .xlsx 或 .csv 文件。" }],
-//           };
-//         }
-//       }
-
-//       // 选择目标sheet
-//       const availableSheets = Object.keys(data.data);
-//       let targetSheet = sheetName && availableSheets.includes(sheetName) ? sheetName : availableSheets[0];
-//       if (!data.data[targetSheet]) {
-//         return {
-//           content: [{ type: "text", text: `❌ 工作表 ${sheetName} 不存在。可用工作表: ${availableSheets.join(", ")}` }],
-//         };
-//       }
-
-//       const jsonData = data.data[targetSheet] as (string | number)[][];
-//       const headerRow = jsonData[0] || [];
-//       const rows = jsonData.slice(1);
-
-//       // 预览数据（仅首次读取时展示）
-//       if (!sessionCache.has(filePath)) {
-//         const responseChunks: string[] = [];
-//         responseChunks.push(`📄 检测到${filePath.endsWith(".csv") ? "CSV文件" : "工作表"}: ${filePath.endsWith(".csv") ? filePath : availableSheets.join(", ")}`);
-//         responseChunks.push(`\n🔹 ${filePath.endsWith(".csv") ? "文件名" : "工作表"}: ${targetSheet}`);
-//         responseChunks.push(`表头: ${headerRow.join(", ")}`);
-//         const previewRows = jsonData.slice(1, 11);
-//         responseChunks.push(`前 ${previewRows.length} 行数据:`);
-//         for (const row of previewRows) {
-//           responseChunks.push(row.map(cell => (cell === undefined ? "" : String(cell))).join(" | "));
-//         }
-//         responseChunks.push("---");
-//         return {
-//           content: [{ type: "text", text: responseChunks.join("\n") }],
-//         };
-//       }
-
-//       // 根据 action 处理数据
-//       const responseChunks: string[] = [];
-//       if (action === "extract_column") {
-//         if (columnIndex === undefined || columnIndex >= headerRow.length) {
-//           return {
-//             content: [{ type: "text", text: `❌ 无效的列索引: ${columnIndex}` }],
-//           };
-//         }
-//         const columnData = rows.map(row => row[columnIndex] ?? "").filter(cell => cell !== "");
-//         responseChunks.push(`🔹 提取列: ${headerRow[columnIndex]} (工作表: ${targetSheet})`);
-//         responseChunks.push(columnData.join("\n"));
-//       } else if (action === "filter_rows") {
-//         if (!filterValue) {
-//           return {
-//             content: [{ type: "text", text: "❌ 缺少过滤值" }],
-//           };
-//         }
-//         const filteredRows = rows.filter(row =>
-//           row.some(cell => String(cell).includes(filterValue))
-//         );
-//         responseChunks.push(`🔹 过滤包含 "${filterValue}" 的行 (工作表: ${targetSheet}):`);
-//         for (const row of filteredRows) {
-//           responseChunks.push(row.map(cell => (cell === undefined ? "" : String(cell))).join(" | "));
-//         }
-//       }
-
-//       return {
-//         content: [{ type: "text", text: responseChunks.join("\n") }],
-//       };
-//     } catch (error) {
-//       console.error("处理数据时出错:", error);
-//       return {
-//         content: [{ type: "text", text: "❌ 处理数据失败。" }],
-//       };
-//     }
-//   }
-// );
 
 // 启动服务主函数
 async function main() {
