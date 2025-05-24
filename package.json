@@ -7,11 +7,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourname/excel-mcp.git"
+    "url": "https://github.com/choco9527/excel-mcp.git"
   },
-  "homepage": "https://github.com/yourname/excel-mcp",
+  "homepage": "https://github.com/choco9527/excel-mcp",
   "bugs": {
-    "url": "https://github.com/yourname/excel-mcp/issues"
+    "url": "https://github.com/choco9527/excel-mcp/issues"
   },
   "keywords": ["excel", "csv", "mcp", "数据处理", "modelcontextprotocol"],
   "bin": {
