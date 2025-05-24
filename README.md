@@ -1,10 +1,3 @@
-当然可以！以下是中文版本的 `README.md`，适用于你的 `excel-mcp` 项目：
-
----
-
-### 📄 `README.md`
-
-````markdown
 # 📊 excel-mcp
 
 `excel-mcp` 是一个基于 [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) 的服务器，使用 TypeScript 编写，具备读取 Excel 文件（`.xlsx` 格式）的功能，并通过 MCP 协议对接交互式工具。
@@ -66,10 +59,15 @@ MCP Server 会通过标准输入/输出（stdio）监听来自 Model Context 的
 #### 示例请求：
 
 ```json
-{
-  "tool": "read_excel",
-  "input": {
-    "filePath": "/absolute/path/to/example.xlsx"
-  }
-}
+// {
+//   "tool": "read_excel",
+//   "input": {
+//     "filePath": "/absolute/path/to/example.xlsx"
+//   }
+// }
+
+  "excel-mcp": {
+      "command": "node",
+      "args": ["./build/index.js"]
+    }
 ```
