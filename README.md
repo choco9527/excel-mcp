@@ -66,8 +66,15 @@ MCP Server 会通过标准输入/输出（stdio）监听来自 Model Context 的
 //   }
 // }
 
-  "excel-mcp": {
-      "command": "node",
-      "args": ["./build/index.js"]
+示例:
+{
+  "mcpServers": {
+    "excel-mcp": {
+      "command": "npx",
+      "args": [
+        "excel-mcp"
+      ]
     }
+  }
+}
 ```
