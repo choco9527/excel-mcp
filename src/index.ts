@@ -4,7 +4,6 @@ import { z } from "zod";
 import xlsx from "xlsx";
 import fs from "fs";
 // 内存缓存，存储已读取的数据
-const sessionCache = new Map<string, { filePath: string; data: { [sheetName: string]: (string | number)[][] } }>();
 
 // 初始化 MCP Server
 const server = new McpServer({
@@ -79,9 +78,6 @@ server.tool(
           content: [{ type: "text", text: "❌ 仅支持 .xlsx 或 .csv 文件。" }],
         };
       }
-
-      // 缓存数据
-      sessionCache.set(filePath, data);
 
       // 添加提示，引导模型继续交互
       responseChunks.push(
